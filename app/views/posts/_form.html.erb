@@ -27,7 +27,12 @@
 
   <div class="field">
     <%= form.label :channel_id %>
-    <%= form.number_field :channel_id %>
+    <% obj = [] %>
+    <% current_user.channels.each do |channel| %>
+      <% obj += [[channel.name, channel.id]] %>
+    <% end %>
+    <%= form.select :channel_id, obj %>
+
   </div>
 
   <div class="actions">
