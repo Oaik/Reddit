@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: %i[ show edit update destroy ]
+  before_action :valid_user, only: [:edit, :update, :destory]
 
   # GET /comments or /comments.json
   def index
@@ -17,6 +18,9 @@ class CommentsController < ApplicationController
 
   # GET /comments/1/edit
   def edit
+    if @comment.user != current_user
+      redirect_to root_path
+    end
   end
 
   # POST /comments or /comments.json
@@ -65,5 +69,11 @@ class CommentsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def comment_params
       params.require(:comment).permit(:body, :user_id, :post_id)
+    end
+
+    def valid_user
+      if @comment.user != current_user
+        redirect_to comments_path, notice: "Not Authorized"
+      end
     end
 end

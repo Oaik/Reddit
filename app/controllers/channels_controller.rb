@@ -1,5 +1,6 @@
 class ChannelsController < ApplicationController
   before_action :set_channel, only: %i[ show edit update destroy ]
+  before_action :valid_user, only: [:edit, :update, :destory]
 
   # GET /channels or /channels.json
   def index
@@ -65,5 +66,11 @@ class ChannelsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def channel_params
       params.require(:channel).permit(:name, :user_id)
+    end
+    
+    def valid_user
+      if @channel.user != current_user
+        redirect_to channels_path, notice: "Not Authorized"
+      end
     end
 end

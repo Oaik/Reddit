@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :valid_user, only: [:edit, :update, :destory]
 
   # GET /posts or /posts.json
   def index
@@ -66,4 +67,11 @@ class PostsController < ApplicationController
     def post_params
       params.require(:post).permit(:title, :body, :user_id, :channel_id)
     end
+
+    def valid_user
+      if @post.user != current_user
+        redirect_to posts_path, notice: "Not Authorized"
+      end
+    end
+
 end

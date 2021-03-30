@@ -12,7 +12,7 @@
   </thead>
 
   <tbody>
-    <% @channels.each do |channel| %>
+    <% current_user.channels.each do |channel| %>
       <tr>
         <td><%= channel.name %></td>
         <td><%= channel.user_id %></td>
