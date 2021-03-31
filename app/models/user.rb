@@ -9,7 +9,8 @@ class User < ApplicationRecord
   
   # Association
   has_many :channels, dependent: :destroy
-  has_many :comments, dependent: :destroy
-  has_many :posts, dependent: :destroy
   has_many :following_channels, dependent: :destroy
+  has_many :posts, dependent: :destroy
+  has_many :vote_posts, dependent: :destroy
+  has_many :comments, dependent: :destroy
 end

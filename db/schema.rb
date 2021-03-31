@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_31_081704) do
+ActiveRecord::Schema.define(version: 2021_03_31_123611) do
 
   create_table "channels", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 2021_03_31_081704) do
     t.bigint "channel_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "count", default: 0
     t.index ["channel_id"], name: "index_posts_on_channel_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
@@ -64,6 +65,17 @@ ActiveRecord::Schema.define(version: 2021_03_31_081704) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "vote_posts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "post_id", null: false
+    t.boolean "isUpVote"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["post_id"], name: "index_vote_posts_on_post_id"
+    t.index ["user_id", "post_id"], name: "index_vote_posts_on_user_id_and_post_id", unique: true
+    t.index ["user_id"], name: "index_vote_posts_on_user_id"
+  end
+
   add_foreign_key "channels", "users"
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
@@ -71,4 +83,6 @@ ActiveRecord::Schema.define(version: 2021_03_31_081704) do
   add_foreign_key "following_channels", "users"
   add_foreign_key "posts", "channels"
   add_foreign_key "posts", "users"
+  add_foreign_key "vote_posts", "posts"
+  add_foreign_key "vote_posts", "users"
 end

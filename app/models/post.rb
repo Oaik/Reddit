@@ -7,4 +7,5 @@ class Post < ApplicationRecord
     belongs_to :user
     belongs_to :channel
     has_many :comments , dependent: :destroy
+    has_many :vote_posts , dependent: :destroy
 end

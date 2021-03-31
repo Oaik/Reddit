@@ -1,0 +1,36 @@
+<%= form_with(model: vote_post) do |form| %>
+  <% if vote_post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(vote_post.errors.count, "error") %> prohibited this vote_post from being saved:</h2>
+
+      <ul>
+        <% vote_post.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="field">
+    <%= form.text_field :user_id, id: "user_id", class:"form-control", value: current_user.id, type: "hidden" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :post_id %>
+    <% obj = [] %>
+    <% Post.all.each do |post| %>
+      <% obj += [[post.title, post.id]] %>
+    <% end %>
+    <%= form.select :post_id, obj %>
+
+  </div>
+
+  <div class="field">
+    <%= form.label :isUpVote %>
+    <%= form.number_field :isUpVote %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
