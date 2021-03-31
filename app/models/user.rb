@@ -4,10 +4,12 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   
+  # Validation
   validates :username, presence: true
   
-
-  has_many :channels, dependent: :destroy
-  has_many :comments, dependent: :destroy
-  has_many :posts, dependent: :destroy
+  # Association
+  has_many :channels
+  has_many :comments
+  has_many :posts
+  has_many :following_channels
 end
