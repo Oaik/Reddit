@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :following_channels
   get 'homepage/index'
   root 'homepage#index'
   resources :comments

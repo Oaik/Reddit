@@ -7,18 +7,22 @@
     <tr>
       <th>Name</th>
       <th>Owner user</th>
-      <th colspan="3"></th>
+      <th colspan="4"></th>
     </tr>
   </thead>
 
   <tbody>
-    <% current_user.channels.each do |channel| %>
+    <% @channels.each do |channel| %>
       <tr>
         <td><%= channel.name %></td>
         <td><%= channel.user_id %></td>
         <td><%= link_to 'Show', channel %></td>
-        <td><%= link_to 'Edit', edit_channel_path(channel) %></td>
-        <td><%= link_to 'Destroy', channel, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%if channel.user == current_user %>
+          <td><%= link_to 'Edit', edit_channel_path(channel) %></td>
+          <td><%= link_to 'Destroy', channel, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% else %>
+          <td><%= link_to 'follow', channel %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

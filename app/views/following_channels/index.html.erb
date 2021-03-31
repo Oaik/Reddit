@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Following Channels</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User id</th>
+      <th>Channel id</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @following_channels.each do |following_channel| %>
+      <tr>
+        <td><%= following_channel.user_id %></td>
+        <td><%= following_channel.channel_id %></td>
+        <td><%= link_to 'Show', following_channel %></td>
+        <%if following_channel.user == current_user %>
+         <td><%= link_to 'Destroy', following_channel, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%end%>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Following Channel', new_following_channel_path %>

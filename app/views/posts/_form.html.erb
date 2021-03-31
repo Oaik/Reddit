@@ -28,8 +28,8 @@
   <div class="field">
     <%= form.label :channel_id %>
     <% obj = [] %>
-    <% current_user.channels.each do |channel| %>
-      <% obj += [[channel.name, channel.id]] %>
+    <% current_user.following_channels.each do |following_channels| %>
+      <% obj += [[following_channels.channel.name, following_channels.channel_id]] %>
     <% end %>
     <%= form.select :channel_id, obj %>
 

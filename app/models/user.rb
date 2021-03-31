@@ -8,8 +8,8 @@ class User < ApplicationRecord
   validates :username, presence: true
   
   # Association
-  has_many :channels
-  has_many :comments
-  has_many :posts
-  has_many :following_channels
+  has_many :channels, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  has_many :posts, dependent: :destroy
+  has_many :following_channels, dependent: :destroy
 end
