@@ -1,0 +1,74 @@
+<div class="container posts">
+    <% @posts.each do |post| %>
+        <div class="post my-4">
+            <%# basic information about post %>
+            <h3>
+                <%= post.title %>
+            </h3>
+
+            <p><%= post.body %></p>
+
+            <p>Post by: <%= post.user.username %> created at <%= post.created_at %></p>
+            <p>channel <%= post.channel.name %> count: <%= post.count %> </p>
+
+
+            <%# vote for the post %>
+            <% if VotePost.find_by(user_id: current_user.id, post_id: post.id) %>
+               <%= link_to 'remove vote', VotePost.find_by(user_id: current_user.id, post_id: post.id), method: :delete, data: { confirm: 'Are you sure?' } %>
+            <% else %>
+                <% (0..1).each do |val| %>
+                    <%= form_for(VotePost.new) do |form| %>
+
+                        <div class="field">
+                            <%= form.text_field :user_id, id: "user_id", class:"form-control", value: current_user.id, type: "hidden" %>
+                        </div>
+
+                        <div class="field">
+                            <%= form.text_field :post_id, id: "post_id", class:"form-control", value: post.id, type: "hidden" %>
+                        </div>
+
+                        <div class="field">
+                            <%= form.text_field :isUpVote, id: "isUpVote", class:"form-control", value: val, type: "hidden" %>
+                        </div>
+
+                        <div class="actions">
+                            <% text_submit = (val == 1 ? "upvote" : "downvote") %>
+                            <%= form.submit  text_submit %>
+                        </div>
+                    <% end %>
+                <% end %>
+            <% end %>
+
+            <br>
+
+            <%# show all comments %>
+            <%= render "homepage/comments/show", comments: post.comments %>
+
+            <%# add new comment %>
+            <br>
+            <p>add new comment?</p>
+            <div class="add_comment">
+                <%= form_for(Comment.new) do |form| %>
+                    <div class="field">
+                        <%= form.label :body %>
+                        <%= form.text_field :body %>
+                    </div>
+
+                    <div class="field">
+                        <%= form.text_field :user_id, id: "user_id", class:"form-control", value: current_user.id, type: "hidden" %>
+                    </div>
+
+                    <div class="field">
+                        <%= form.text_field :post_id, id: "post_id", class:"form-control", value: post.id, type: "hidden" %>
+                    </div>
+
+                    <div class="actions">
+                        <%= form.submit %>
+                    </div>
+                <% end %>
+            </div>
+
+
+        </div>
+    <% end %>
+</div>
