@@ -1,19 +1,6 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Body:</strong>
-  <%= @comment.body %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @comment.user_id %>
-</p>
-
-<p>
-  <strong>Post:</strong>
-  <%= @comment.post_id %>
-</p>
-
-<%= link_to 'Edit', edit_comment_path(@comment) %> |
-<%= link_to 'Back', comments_path %>
+<p class="mb-0 mt-2"><%= @comment.user.username %>: <%= @comment.body %></p>
+<% if current_user == @comment.user %>
+    <%= link_to 'Edit', edit_comment_path(@comment) %> |        
+    <td><%= link_to 'Destroy', @comment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <br>
+<% end %>

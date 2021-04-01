@@ -1,0 +1,27 @@
+<% if user_signed_in? %>
+    <% if VotePost.find_by(user_id: current_user.id, post_id: post.id) %>
+    <%= link_to 'remove vote', VotePost.find_by(user_id: current_user.id, post_id: post.id), method: :delete, data: { confirm: 'Are you sure?' } %>
+    <% else %>
+        <% (0..1).each do |val| %>
+            <%= form_for(VotePost.new) do |form| %>
+
+                <div class="field">
+                    <%= form.text_field :user_id, id: "user_id", class:"form-control", value: current_user.id, type: "hidden" %>
+                </div>
+
+                <div class="field">
+                    <%= form.text_field :post_id, id: "post_id", class:"form-control", value: post.id, type: "hidden" %>
+                </div>
+
+                <div class="field">
+                    <%= form.text_field :isUpVote, id: "isUpVote", class:"form-control", value: val, type: "hidden" %>
+                </div>
+
+                <div class="actions">
+                    <% text_submit = (val == 1 ? "upvote" : "downvote") %>
+                    <%= form.submit  text_submit %>
+                </div>
+            <% end %>
+        <% end %>
+    <% end %>
+<% end %>

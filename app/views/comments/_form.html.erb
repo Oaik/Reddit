@@ -20,11 +20,14 @@
     <%= form.text_field :user_id, id: "user_id", class:"form-control", value: current_user.id, type: "hidden" %>
   </div>
 
-  <div class="field">
-    <%= form.label :post_id %>
-    <%= form.text_field :post_id %>
-  </div>
-
+  <% if comment.post_id %>
+    <%= form.text_field :post_id, id: "post_id", class:"form-control", value: comment.post_id, type: "hidden" %>
+  <% else %>
+    <div class="field">
+      <%= form.label :post_id %>
+      <%= form.text_field :post_id %>
+    </div>
+  <%end %>
   <div class="actions">
     <%= form.submit %>
   </div>

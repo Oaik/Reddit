@@ -26,13 +26,16 @@
   </div>
 
   <div class="field">
-    <%= form.label :channel_id %>
-    <% obj = [] %>
-    <% current_user.following_channels.each do |following_channels| %>
-      <% obj += [[following_channels.channel.name, following_channels.channel_id]] %>
+    <% if post.channel %>
+        <%= form.text_field :channel_id, id: "channel_id", class:"form-control", value: post.channel_id, type: "hidden" %>
+    <% else %>
+      <%= form.label :channel_id %>
+      <% obj = [] %>
+      <% current_user.following_channels.each do |following_channels| %>
+        <% obj += [[following_channels.channel.name, following_channels.channel_id]] %>
+      <% end %>
+      <%= form.select :channel_id, obj %>
     <% end %>
-    <%= form.select :channel_id, obj %>
-
   </div>
 
   <div class="actions">

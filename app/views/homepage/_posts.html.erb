@@ -43,7 +43,7 @@
             <br>
 
             <%# show all comments %>
-            <%= render "homepage/comments/show", comments: post.comments %>
+            <%= render "homepage/comments/show", comments: post.comments.first(1) %>
 
             <%# add new comment %>
             <% if user_signed_in? %>

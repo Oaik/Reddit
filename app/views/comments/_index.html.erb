@@ -1,0 +1,16 @@
+<% comments.each do |comment| %>
+  <p class="my-0">
+    <%= comment.user.username %> : <%= comment.body %>
+  </p>
+  <% if current_user == comment.user %>
+      <div>
+        <%= link_to 'Edit', edit_comment_path(comment) %>
+        <%= link_to 'Destroy', comment, method: :delete, data: { confirm: 'Are you sure?' } %>
+      </div>
+  <% end %>
+  <br>
+<% end %>
+
+<br>
+
+<%= link_to 'New Comment', new_comment_path %>
