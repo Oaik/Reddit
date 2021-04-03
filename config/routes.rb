@@ -1,10 +1,14 @@
 Rails.application.routes.draw do
+  # Devise routes
+  devise_for :users
+  
+  # Resources
   resources :vote_posts
   resources :following_channels
-  root 'homepage#index'
   resources :comments
   resources :posts
   resources :channels
-  devise_for :users
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  
+  # homepage
+  root 'homepage#index'
 end

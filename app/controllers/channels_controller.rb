@@ -68,6 +68,7 @@ class ChannelsController < ApplicationController
       params.require(:channel).permit(:name, :user_id)
     end
     
+    # validate that the current user is authorized
     def valid_user
       if @channel.user != current_user
         redirect_to channels_path, notice: "Not Authorized"

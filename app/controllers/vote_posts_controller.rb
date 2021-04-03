@@ -82,6 +82,7 @@ class VotePostsController < ApplicationController
       params.require(:vote_post).permit(:user_id, :post_id, :isUpVote)
     end
 
+    # validate that the current user is authorized
     def valid_user
       if @vote_post.user != current_user
         redirect_to posts_path, notice: "Not Authorized"

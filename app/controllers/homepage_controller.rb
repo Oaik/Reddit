@@ -1,5 +1,7 @@
 class HomepageController < ApplicationController
+
+  # GET /
   def index
-    @posts = Post.all
+    
   end
 end

@@ -67,7 +67,8 @@ class FollowingChannelsController < ApplicationController
       params.require(:following_channel).permit(:channel_id, :user_id)
       # params.fetch(:following_channel, {})
     end
-
+    
+    # validate that the current user is authorized
     def valid_user
       if @following_channel.user != current_user
         redirect_to following_channels_path, notice: "Not Authorized"

@@ -68,6 +68,7 @@ class PostsController < ApplicationController
       params.require(:post).permit(:title, :body, :user_id, :channel_id)
     end
 
+    # validate that the current user is authorized
     def valid_user
       if @post.user != current_user
         redirect_to posts_path, notice: "Not Authorized"

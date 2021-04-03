@@ -68,6 +68,7 @@ class CommentsController < ApplicationController
       params.require(:comment).permit(:body, :user_id, :post_id)
     end
 
+    # validate that the current user is authorized
     def valid_user
       if @comment.user != current_user
         redirect_to comments_path, notice: "Not Authorized"
