@@ -1,3 +1,56 @@
-// Place all the styles related to the homepage controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+
+.sign-form {
+	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient 10s ease infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+	p,a {
+		color: #fff;
+	}
+	form {
+		h2 {
+				color: #fff;
+				letter-spacing: 2px;
+		}
+		input {
+			border: 1px solid rgba(255, 255, 255, 0.2);
+			background: rgba(255, 255, 255, 0.2);
+			color: #fff;
+		}
+		img {
+			position: absolute;
+			top: 10px;
+			width: 32px;
+			right: 8px;
+			transform: scale(0.6);
+			filter: invert(1);
+		}
+	}
+	
+}
+
+.containerLogin {
+	position: relative;
+	padding: 50px;
+	min-width: 260px;
+	min-height: 380px;
+	background: rgba(255, 255, 255, 0.1);
+	backdrop-filter: blur(5px);
+	border-radius: 10px;
+	box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+}
