@@ -1,14 +1,33 @@
-<p>
-  <strong>Name:</strong>
-  <%= @channel.name %>
-</p>
+<div class="container my-5">
+  <p>
+    <strong>Name:</strong>
+    <%= @channel.name %>
+  </p>
 
-<p>
-  <strong>Owner user:</strong>
-  <%= @channel.user_id %>
-</p>
+  <p>
+    <strong>Owner user:</strong>
+    <%= @channel.user.username %>
+  </p>
 
-<% if user_signed_in? && current_user == @channel.user %>
-  <%= link_to 'Edit', edit_channel_path(@channel) %>
-<% end %>
+  <% if user_signed_in? && current_user == @channel.user %>
+    <%= link_to 'Edit', edit_channel_path(@channel) %>
+  <% end %>
 
+  <% if user_signed_in? %>
+    <% if @channel.following_channels.find_by(user_id: current_user.id) %>
+      <span><%= link_to 'UnFollow', @channel.following_channels.find_by(user_id: current_user.id), method: :delete, data: { confirm: 'Are you sure?' } %></span>
+      <br>
+      <%= link_to "create new post", new_post_path %>
+    <% else %>
+      <% following_channel = FollowingChannel.new %>
+      <% following_channel.channel_id = @channel.id %>
+      <%= render "following_channels/form", following_channel: following_channel %>
+    <%end%>
+  <%end%>
+</div>
+
+
+
+<% @channel.posts.each do |post| %>
+  <%= render "posts/show", post: post %>
+<%end%>

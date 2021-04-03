@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :vote_posts
   resources :following_channels
-  root 'posts#index'
+  root 'homepage#index'
   resources :comments
   resources :posts
   resources :channels

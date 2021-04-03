@@ -14,13 +14,17 @@
   <% end %>
   <%# vote for the post %>
   <p> count: <%= post.count %> </p>
-  <%= render "create_vote_post", post: post %>
-
+  <% if user_signed_in? %>
+    <%= render "/posts/create_vote_post", post: post %>
+  <% end %>
   <%# show all comments %>
   <p> total comments: <%= post.comments.length %> </p>
   <%= render "/comments/index", comments: post.comments %>
 
-  <% newComment = Comment.new %>
-  <% newComment.post_id = post.id %>
-  <%= render "/comments/form", comment: newComment %>
+  <% if user_signed_in? %>
+    <% newComment = Comment.new %>
+    <% newComment.post_id = post.id %>
+    <%= render "/comments/form", comment: newComment %>
+  <% end %>
+
 </div>

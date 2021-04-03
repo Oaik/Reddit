@@ -1,35 +1,26 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Channels</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Owner user</th>
-      <th colspan="4"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @channels.each do |channel| %>
-      <tr>
-        <td><%= channel.name %></td>
-        <td><%= channel.user_id %></td>
-        <td><%= link_to 'Show', channel %></td>
-        <%if channel.user == current_user %>
-          <td><%= link_to 'Edit', edit_channel_path(channel) %></td>
-          <td><%= link_to 'Destroy', channel, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% else %>
-          <td><%= link_to 'follow', channel %></td>
-        <% end %>
-      </tr>
+<div class="container">
+  <h1>Channels</h1>
+  <% @channels.each do |channel| %>
+    <span><%= channel.name %></span>
+    <span><%= channel.user_id %></span>
+    <span><%= link_to 'Show', channel %></span>
+    <%if user_signed_in? && channel.user == current_user %>
+      <span><%= link_to 'Edit', edit_channel_path(channel) %></span>
+      <span><%= link_to 'Destroy', channel, method: :delete, data: { confirm: 'Are you sure?' } %></span>
     <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<% if user_signed_in? %>
-  <%= link_to 'New Channel', new_channel_path %>
-<% end %>
+    <% if user_signed_in? %>
+      <% if channel.following_channels.find_by(user_id: current_user.id) %>
+        <span><%= link_to 'UnFollow', channel.following_channels.find_by(user_id: current_user.id), method: :delete, data: { confirm: 'Are you sure?' } %></span>
+      <% else %>
+        <% following_channel = FollowingChannel.new %>
+        <% following_channel.channel_id = channel.id %>
+        <%= render "following_channels/form", following_channel: following_channel %>
+      <%end%>
+    <%end%>
+    <br>
+  <% end %>
+  <% if user_signed_in? %>
+  <br>
+    <%= link_to 'New Channel', new_channel_path %>
+  <% end %>
+</div>

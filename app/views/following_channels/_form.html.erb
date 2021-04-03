@@ -15,22 +15,21 @@
     <%= form.text_field :user_id, id: "user_id", class:"form-control", value: current_user.id, type: "hidden" %>
   </div>
 
-    <div class="field">
-    <%= form.label :channel_id %>
-    <% obj = [] %>
-    <% ids_to_excute = [] %>
-    <% current_user.following_channels.each do |channel| %>
-      <% ids_to_excute.push( channel.channel_id) %>
-    <% end %>
-    <% Channel.where.not(id: ids_to_excute).each do |channel| %>
-      <% obj += [[channel.name, channel.id]] %>
-    <% end %>
-    <%= form.select :channel_id, obj %>
-
-  </div>
-
   <div class="field">
-    <%= form.text_field :user_id, id: "user_id", class:"form-control", value: current_user.id, type: "hidden" %>
+    <% if following_channel.channel_id %>
+      <%= form.text_field :channel_id, id: "channel_id", class:"form-control", value: following_channel.channel_id, type: "hidden" %>
+    <% else %>
+      <%= form.label :channel_id %>
+      <% obj = [] %>
+      <% ids_to_excute = [] %>
+      <% current_user.following_channels.each do |channel| %>
+        <% ids_to_excute.push( channel.channel_id) %>
+      <% end %>
+      <% Channel.where.not(id: ids_to_excute).each do |channel| %>
+        <% obj += [[channel.name, channel.id]] %>
+      <% end %>
+      <%= form.select :channel_id, obj %>
+    <% end %>
   </div>
 
   <div class="actions">

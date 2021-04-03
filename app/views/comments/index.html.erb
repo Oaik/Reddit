@@ -1,20 +1,5 @@
-<% @comments.each do |comment| %>
-  <p class="my-0">
-    <%= comment.user.username %> : <%= comment.body %>
-  </p>
-  <% if user_signed_in? %>
-    <% if current_user == comment.user %>
-        <div>
-          <%= link_to 'Edit', edit_comment_path(comment) %>
-          <%= link_to 'Destroy', comment, method: :delete, data: { confirm: 'Are you sure?' } %>
-        </div>
-    <% end %>
-  <% end %>
+<div class="container">
+  <h2 class="my-3">All comments</h2>
   <br>
-<% end %>
-
-<br>
-
-<% if user_signed_in? %>
-  <%= link_to 'New Comment', new_comment_path %>
-<% end %>
+  <%= render "index", comments: @comments %>
+</div>
