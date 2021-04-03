@@ -18,9 +18,6 @@ class CommentsController < ApplicationController
 
   # GET /comments/1/edit
   def edit
-    if @comment.user != current_user
-      redirect_to root_path
-    end
   end
 
   # POST /comments or /comments.json

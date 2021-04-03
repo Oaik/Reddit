@@ -9,7 +9,9 @@
 
   <p>Post by: <%= post.user.username %> created at <%= post.created_at %></p>
   <p>channel <%= post.channel.name %> </p>
-
+  <% if user_signed_in? && current_user == post.user %>
+    <%= link_to 'Edit Post', edit_post_path(post) %>
+  <% end %>
   <%# vote for the post %>
   <p> count: <%= post.count %> </p>
   <%= render "create_vote_post", post: post %>
@@ -18,8 +20,7 @@
   <p> total comments: <%= post.comments.length %> </p>
   <%= render "/comments/index", comments: post.comments %>
 
-  <% if current_user == post.user %>
-    <br>
-    <%= link_to 'Edit Post', edit_post_path(post) %>
-  <% end %>
+  <% newComment = Comment.new %>
+  <% newComment.post_id = post.id %>
+  <%= render "/comments/form", comment: newComment %>
 </div>

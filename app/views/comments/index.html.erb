@@ -15,4 +15,6 @@
 
 <br>
 
-<%= link_to 'New Comment', new_comment_path %>
+<% if user_signed_in? %>
+  <%= link_to 'New Comment', new_comment_path %>
+<% end %>

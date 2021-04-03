@@ -1,25 +1,6 @@
-
-
-
 <div class="container post my-4">
 
   <%# basic information about post %>
-  <h3>
-      <%= @post.title %>
-  </h3>
+  <%= render "show", post: @post  %>
 
-  <p><%= @post.body %></p>
-
-  <p>Post by: <%= @post.user.username %> created at <%= @post.created_at %></p>
-  <p>channel <%= @post.channel.name %> count: <%= @post.count %> </p>
-
-  <%# vote for the post %>
-
-  <%# show all comments %>
-  <p> total comments: <%= @post.comments.length %> </p>
-  <%= render "/comments/index", comments: @post.comments %>
-
-
-<%= link_to 'Edit', edit_post_path(@post) %> |
-<%= link_to 'Back', posts_path %>
 </div>

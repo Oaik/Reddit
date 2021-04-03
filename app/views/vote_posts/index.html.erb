@@ -19,8 +19,10 @@
         <td><%= vote_post.post_id %></td>
         <td><%= vote_post.isUpVote %></td>
         <td><%= link_to 'Show', vote_post %></td>
-        <td><%= link_to 'Edit', edit_vote_post_path(vote_post) %></td>
-        <td><%= link_to 'Destroy', vote_post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if user_signed_in? && current_user == vote_post.user %>
+          <td><%= link_to 'Edit', edit_vote_post_path(vote_post) %></td>
+          <td><%= link_to 'Destroy', vote_post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%end%>
       </tr>
     <% end %>
   </tbody>

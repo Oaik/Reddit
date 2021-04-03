@@ -18,7 +18,11 @@
     <div class="field">
     <%= form.label :channel_id %>
     <% obj = [] %>
-    <% Channel.all.each do |channel| %>
+    <% ids_to_excute = [] %>
+    <% current_user.following_channels.each do |channel| %>
+      <% ids_to_excute.push( channel.channel_id) %>
+    <% end %>
+    <% Channel.where.not(id: ids_to_excute).each do |channel| %>
       <% obj += [[channel.name, channel.id]] %>
     <% end %>
     <%= form.select :channel_id, obj %>
