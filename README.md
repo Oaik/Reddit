@@ -49,7 +49,9 @@ Each user can
 ## Database Modeling
 
 view it online: https://dbdiagram.io/d/6062e295ecb54e10c33de73e
-<img src="screenshots/readdit.png" alt="diagram for app">
+<img src="screenshots/reddit.png" alt="diagram for app">
+<h3>Verision with highlight</h3>
+<img src="screenshots/reddit-selected.png" alt="diagram for app">
 
 // users
 // posts
