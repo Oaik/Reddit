@@ -1,30 +1,50 @@
-<div class="container post my-4">
-
+<div class="container my-4">
+  <div class="post">
   <%# basic information about post %>
-  <h3>
-    <%= link_to post.title, post, class: "h3" %>
-  </h3>
+    <%# vote for the post %>
+    <div class="vote-post mx-2">
+      <p> count: <%= post.count %> </p>
+      <% if user_signed_in? %>
+        <%= render "/posts/create_vote_post", post: post %>
+      <% end %>
+    </div>
+    <div class="content">
 
-  <p><%= post.body %></p>
+      <div>
+        channel <%= link_to post.channel.name, post.channel, class: "" %>
+        Post by: <%= post.user.username %> 
+        created at <%= post.created_at %>
+        
+      </div>
 
-  <p>Post by: <%= post.user.username %> created at <%= post.created_at %></p>
-  <p>channel <%= post.channel.name %> </p>
-  <% if user_signed_in? && current_user == post.user %>
-    <%= link_to 'Edit Post', edit_post_path(post) %>
-  <% end %>
-  <%# vote for the post %>
-  <p> count: <%= post.count %> </p>
-  <% if user_signed_in? %>
-    <%= render "/posts/create_vote_post", post: post %>
-  <% end %>
+      <h3>
+        <%= link_to post.title, post, class: "h3" %>
+      </h3>
+
+      <p><%= post.body %></p>
+
+      <% if !defined?(showComments) || !showComments %>
+        <%= link_to post.comments.length.to_s + " comments", post %>
+      <% end %>
+
+      <% if user_signed_in? && current_user == post.user %>
+        <%= link_to 'Edit Post', edit_post_path(post) %>
+      <% end %>
+
+
+
+      <%# create new comment %>
+      <% if user_signed_in? && defined?(includeComment) && includeComment %>
+        <% newComment = Comment.new %>
+        <% newComment.post_id = post.id %>
+        <%= render "/comments/form", comment: newComment %>
+      <% end %>
+    </div>
   <%# show all comments %>
-  <p> total comments: <%= post.comments.length %> </p>
-  <%= render "/comments/index", comments: post.comments %>
-
-  <% if user_signed_in? %>
-    <% newComment = Comment.new %>
-    <% newComment.post_id = post.id %>
-    <%= render "/comments/form", comment: newComment %>
+  </div>
+  <% if defined?(showComments) && showComments %>
+    <p> total comments: <%= post.comments.length %> </p>
+    <%= render "/comments/index", comments: post.comments %>
   <% end %>
 
 </div>

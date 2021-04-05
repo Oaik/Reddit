@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="container">
+                <%= link_to 'New Post', new_post_path %>
+            </div>
+
+            <% @posts.each do |post| %>
+            <%= render "posts/show", post: post, includeComment: false  %>
+            <% end %>
+        </div>
+        <div class="col-md-4">
+            <div class="container mb-4">
+                <%= link_to 'New Channel', new_channel_path %>
+            </div>
+            <div class="post">
+                <div class="container">
+                <% @channels.each do |channel| %>
+                    <span><%= channel.name %></span>
+                    <span><%= channel.user_id %></span>
+                    <span><%= link_to 'Show', channel %></span>
+                    <%if user_signed_in? && channel.user == current_user %>
+                    <span><%= link_to 'Edit', edit_channel_path(channel) %></span>
+                    <span><%= link_to 'Destroy', channel, method: :delete, data: { confirm: 'Are you sure?' } %></span>
+                    <% end %>
+                    <% if user_signed_in? %>
+                    <% if channel.following_channels.find_by(user_id: current_user.id) %>
+                        <span><%= link_to 'UnFollow', channel.following_channels.find_by(user_id: current_user.id), method: :delete, data: { confirm: 'Are you sure?' } %></span>
+                    <% else %>
+                        <% following_channel = FollowingChannel.new %>
+                        <% following_channel.channel_id = channel.id %>
+                        <%= render "following_channels/form", following_channel: following_channel %>
+                    <%end%>
+                    <%end%>
+                    <br>
+                <% end %>
+                <% if user_signed_in? %>
+                <br>
+                    <%= link_to 'New Channel', new_channel_path %>
+                <% end %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

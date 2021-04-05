@@ -13,6 +13,7 @@
  *= require_tree .
  *= require_self
  */
-.hide-it-imp {
-    display: none !important;
-}
+
+ body {
+    background-color: #dae0e6;
+ }

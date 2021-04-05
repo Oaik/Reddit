@@ -14,7 +14,6 @@
       <tr>
         <td><%= following_channel.user_id %></td>
         <td><%= following_channel.channel_id %></td>
-        <td><%= link_to 'Show', following_channel %></td>
         <%if following_channel.user == current_user %>
          <td><%= link_to 'Destroy', following_channel, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <%end%>
